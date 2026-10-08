@@ -127,4 +127,16 @@ async function conectarVC() {
 
     console.log(`Conectado al VC: ${canal.name}`);
 
-    conexionVC.on(VoiceConnection
+    conexionVC.on(VoiceConnectionStatus.Disconnected, () => {
+  if (reconectando) return;
+
+  reconectando = true;
+
+  console.log("Bot desconectado. Intentando reconectar...");
+
+  setTimeout(async () => {
+    reconectando = false;
+    conexionVC = null;
+    await conectarVC();
+  }, 5000);
+});

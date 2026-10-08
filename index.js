@@ -29,7 +29,7 @@ const client = new Client({
 const slashCommands = [
   new SlashCommandBuilder()
     .setName("help")
-    .setDescription("Muestra el menú de ayuda"),
+    .setDescription("Muestra la ayuda"),
 
   new SlashCommandBuilder()
     .setName("ping")
@@ -41,13 +41,7 @@ const slashCommands = [
 
   new SlashCommandBuilder()
     .setName("userinfo")
-    .setDescription("Información de un usuario")
-    .addUserOption(option =>
-      option
-        .setName("usuario")
-        .setDescription("Usuario")
-        .setRequired(false)
-    ),
+    .setDescription("Información de un usuario"),
 
   new SlashCommandBuilder()
     .setName("serverinfo")
@@ -56,12 +50,6 @@ const slashCommands = [
   new SlashCommandBuilder()
     .setName("avatar")
     .setDescription("Muestra un avatar")
-    .addUserOption(option =>
-      option
-        .setName("usuario")
-        .setDescription("Usuario")
-        .setRequired(false)
-    )
 ].map(command => command.toJSON());
 
 async function registrarComandos() {
@@ -73,21 +61,14 @@ async function registrarComandos() {
       GUILD_ID
     );
 
-    console.log(
-      "Comandos slash registrados correctamente."
-    );
+    console.log("Comandos slash registrados correctamente.");
   } catch (error) {
-    console.error(
-      "Error registrando comandos:",
-      error
-    );
+    console.error("Error registrando comandos:", error);
   }
 }
 
 let conexionVC = null;
-let reconectando = false;
-
-async function conectarVC() {
+let reconectando = false;async function conectarVC() {
   if (reconectando) return;
 
   try {
@@ -99,9 +80,7 @@ async function conectarVC() {
       !canal ||
       canal.type !== ChannelType.GuildVoice
     ) {
-      console.log(
-        "No se encontró el canal de voz."
-      );
+      console.log("No se encontró el canal de voz.");
       return;
     }
 
@@ -116,15 +95,12 @@ async function conectarVC() {
     conexionVC = joinVoiceChannel({
       channelId: canal.id,
       guildId: canal.guild.id,
-      adapterCreator:
-        canal.guild.voiceAdapterCreator,
+      adapterCreator: canal.guild.voiceAdapterCreator,
       selfDeaf: true,
       selfMute: true
     });
 
-    console.log(
-      `Conectado al VC: ${canal.name}`
-    );
+    console.log(`Conectado al VC: ${canal.name}`);
 
     conexionVC.on(
       VoiceConnectionStatus.Disconnected,
@@ -132,10 +108,6 @@ async function conectarVC() {
         if (reconectando) return;
 
         reconectando = true;
-
-        console.log(
-          "Bot desconectado. Reconectando..."
-        );
 
         setTimeout(async () => {
           reconectando = false;
@@ -145,19 +117,16 @@ async function conectarVC() {
       }
     );
   } catch (error) {
-    console.error(
-      "Error conectando al VC:",
-      error
-    );
+    console.error("Error conectando al VC:", error);
 
     setTimeout(() => {
       conectarVC();
     }, 10000);
   }
-}client.once("ready", async () => {
-  console.log(
-    `Bot conectado como ${client.user.tag}`
-  );
+}
+
+client.once("ready", async () => {
+  console.log(`Bot conectado como ${client.user.tag}`);
 
   await registrarComandos();
   await conectarVC();
@@ -166,28 +135,33 @@ async function conectarVC() {
 client.on("messageCreate", async message => {
   if (message.author.bot) return;
   if (!message.guild) return;
-  if (!message.content.startsWith(PREFIX)) return;
 
-  const args = message.content
+  const contenido = message.content.trim();
+
+  if (!contenido.toLowerCase().startsWith(PREFIX)) {
+    return;
+  }
+
+  const partes = contenido
     .slice(PREFIX.length)
     .trim()
     .split(/\s+/);
 
-  const command = args.shift()?.toLowerCase();
+  const command = partes.shift()?.toLowerCase();
 
   if (!command) return;
 
-  if (command === "ping") {
+  console.log(`Comando recibido: ${command}`);  if (command === "ping") {
+    const inicio = Date.now();
+
     const msg = await message.reply(
       "🏓 Calculando..."
     );
 
-    const latency =
-      msg.createdTimestamp -
-      message.createdTimestamp;
+    const latencia = Date.now() - inicio;
 
     return msg.edit(
-      `🏓 **Pong!**\nLatencia: \`${latency}ms\``
+      `🏓 **Pong!**\nLatencia: \`${latencia}ms\``
     );
   }
 
@@ -196,43 +170,27 @@ client.on("messageCreate", async message => {
       .setColor(0x8b5cf6)
       .setTitle("Trapeando Bot • Ayuda")
       .setDescription(
-        "Usa `t` o `/` para utilizar los comandos."
+        "Usa `t` o `/` para los comandos."
       )
       .addFields(
         {
           name: "💗 Social",
-          value:
-            "`tkiss` `thug` `tcuddle` `tlove`",
+          value: "`tkiss` `thug` `tcuddle` `tlove`",
           inline: true
         },
         {
           name: "🛡️ Moderación",
-          value:
-            "`tban` `tkick` `twarn` `tpurge`",
+          value: "`tban` `tkick` `twarn` `tpurge`",
           inline: true
         },
         {
           name: "🎮 Fun",
-          value:
-            "`t8ball` `tdice` `tcoinflip`",
+          value: "`t8ball` `tdice` `tcoinflip`",
           inline: true
         },
         {
           name: "💰 Economía",
-          value:
-            "`tbal` `tdaily` `twork` `tshop`",
-          inline: true
-        },
-        {
-          name: "📊 Niveles",
-          value:
-            "`txp` `tlevel` `trank`",
-          inline: true
-        },
-        {
-          name: "🎫 Tickets",
-          value:
-            "`tticket` `tclose` `tclaim`",
+          value: "`tbal` `tdaily` `twork`",
           inline: true
         }
       );
@@ -246,31 +204,11 @@ client.on("messageCreate", async message => {
     command === "info" ||
     command === "botinfo"
   ) {
-    const embed = new EmbedBuilder()
-      .setColor(0x8b5cf6)
-      .setTitle("Información del bot")
-      .addFields(
-        {
-          name: "🤖 Nombre",
-          value: client.user.tag,
-          inline: true
-        },
-        {
-          name: "📡 Servidores",
-          value:
-            `${client.guilds.cache.size}`,
-          inline: true
-        },
-        {
-          name: "⚙️ Prefijo",
-          value: "`t`",
-          inline: true
-        }
-      );
-
-    return message.reply({
-      embeds: [embed]
-    });
+    return message.reply(
+      `🤖 **Trapeando Bot**\n` +
+      `📡 Servidores: \`${client.guilds.cache.size}\`\n` +
+      `⚙️ Prefijo: \`t\``
+    );
   }
 
   if (command === "userinfo") {
@@ -278,44 +216,36 @@ client.on("messageCreate", async message => {
       message.mentions.users.first() ||
       message.author;
 
-    const miembro =
-      message.guild.members.cache.get(
-        usuario.id
-      );
+    return message.reply(
+      `👤 **${usuario.username}**\n` +
+      `🆔 ID: \`${usuario.id}\``
+    );
+  }
+
+  if (command === "serverinfo") {
+    const guild = message.guild;
+
+    return message.reply(
+      `📊 **${guild.name}**\n` +
+      `👥 Miembros: \`${guild.memberCount}\`\n` +
+      `💬 Canales: \`${guild.channels.cache.size}\``
+    );
+  }
+
+  if (command === "avatar") {
+    const usuario =
+      message.mentions.users.first() ||
+      message.author;
 
     const embed = new EmbedBuilder()
       .setColor(0x8b5cf6)
-      .setTitle(
-        `Información de ${usuario.username}`
-      )
-      .setThumbnail(
+      .setTitle(`Avatar de ${usuario.username}`)
+      .setImage(
         usuario.displayAvatarURL({
-          dynamic: true
+          extension: "png",
+          size: 1024
         })
-      )
-      .addFields(
-        {
-          name: "👤 Usuario",
-          value: `${usuario}`,
-          inline: true
-        },
-        {
-          name: "🆔 ID",
-          value: usuario.id,
-          inline: true
-        }
       );
-
-    if (miembro) {
-      embed.addFields({
-        name: "📥 Entró al servidor",
-        value:
-          `<t:${Math.floor(
-            miembro.joinedTimestamp / 1000
-          )}:R>`,
-        inline: true
-      });
-    }
 
     return message.reply({
       embeds: [embed]
@@ -328,8 +258,7 @@ client.on("messageCreate", async message => {
       return;
     }
 
-    const command =
-      interaction.commandName;
+    const command = interaction.commandName;
 
     if (command === "ping") {
       return interaction.reply(
@@ -338,120 +267,42 @@ client.on("messageCreate", async message => {
     }
 
     if (command === "help") {
-      const embed = new EmbedBuilder()
-        .setColor(0x8b5cf6)
-        .setTitle("Trapeando Bot • Ayuda")
-        .setDescription(
-          "Usa `t` o `/` para utilizar los comandos."
-        )
-        .addFields(
-          {
-            name: "💗 Social",
-            value: "`tkiss` `thug` `tcuddle`",
-            inline: true
-          },
-          {
-            name: "🛡️ Moderación",
-            value: "`tban` `tkick` `twarn`",
-            inline: true
-          },
-          {
-            name: "🎮 Fun",
-            value: "`t8ball` `tdice`",
-            inline: true
-          }
-        );
-
-      return interaction.reply({
-        embeds: [embed]
-      });
+      return interaction.reply(
+        "🤖 **Trapeando Bot**\nUsa `t` o `/` para utilizar los comandos."
+      );
     }
 
     if (command === "info") {
       return interaction.reply(
         `🤖 **Trapeando Bot**\n` +
-        `📡 Servidores: \`${client.guilds.cache.size}\`\n` +
-        `⚙️ Prefijo: \`t\``
+        `📡 Servidores: \`${client.guilds.cache.size}\``
       );
     }
 
     if (command === "userinfo") {
-      const usuario =
-        interaction.options.getUser(
-          "usuario"
-        ) || interaction.user;
+      const usuario = interaction.user;
 
-      const embed = new EmbedBuilder()
-        .setColor(0x8b5cf6)
-        .setTitle(
-          `Información de ${usuario.username}`
-        )
-        .setThumbnail(
-          usuario.displayAvatarURL({
-            dynamic: true
-          })
-        )
-        .addFields(
-          {
-            name: "👤 Usuario",
-            value: `${usuario}`,
-            inline: true
-          },
-          {
-            name: "🆔 ID",
-            value: usuario.id,
-            inline: true
-          }
-        );
-
-      return interaction.reply({
-        embeds: [embed]
-      });
+      return interaction.reply(
+        `👤 **${usuario.username}**\n` +
+        `🆔 ID: \`${usuario.id}\``
+      );
     }
 
     if (command === "serverinfo") {
       const guild = interaction.guild;
 
-      const embed = new EmbedBuilder()
-        .setColor(0x8b5cf6)
-        .setTitle(
-          `Información de ${guild.name}`
-        )
-        .addFields(
-          {
-            name: "👑 Dueño",
-            value: `<@${guild.ownerId}>`,
-            inline: true
-          },
-          {
-            name: "👥 Miembros",
-            value: `${guild.memberCount}`,
-            inline: true
-          },
-          {
-            name: "💬 Canales",
-            value:
-              `${guild.channels.cache.size}`,
-            inline: true
-          }
-        );
-
-      return interaction.reply({
-        embeds: [embed]
-      });
+      return interaction.reply(
+        `📊 **${guild.name}**\n` +
+        `👥 Miembros: \`${guild.memberCount}\``
+      );
     }
 
     if (command === "avatar") {
-      const usuario =
-        interaction.options.getUser(
-          "usuario"
-        ) || interaction.user;
+      const usuario = interaction.user;
 
       const embed = new EmbedBuilder()
         .setColor(0x8b5cf6)
-        .setTitle(
-          `Avatar de ${usuario.username}`
-        )
+        .setTitle(`Avatar de ${usuario.username}`)
         .setImage(
           usuario.displayAvatarURL({
             extension: "png",

@@ -34,23 +34,23 @@ const client = new Client({
 });
 
 const slashCommands = [
-  new SlashCommandBuilder().setName("botinfo").setDescription("Muestra toda la informaciÃ³n del bot"),
-  new SlashCommandBuilder().setName("userinfo").setDescription("Muestra informaciÃ³n de un usuario").addUserOption(opt => opt.setName("usuario").setDescription("Usuario a consultar").setRequired(false)),
-  new SlashCommandBuilder().setName("server-info").setDescription("Muestra toda la informaciÃ³n del servidor"),
-  new SlashCommandBuilder().setName("kick").setDescription("Expulsa a un usuario del servidor").addUserOption(opt => opt.setName("usuario").setDescription("Usuario a expulsar").setRequired(true)).addStringOption(opt => opt.setName("razon").setDescription("RazÃ³n de la expulsiÃ³n").setRequired(false)).setDefaultMemberPermissions(PermissionFlagsBits.KickMembers),
-  new SlashCommandBuilder().setName("ban").setDescription("Banea a un usuario del servidor").addUserOption(opt => opt.setName("usuario").setDescription("Usuario a banear").setRequired(true)).addStringOption(opt => opt.setName("razon").setDescription("RazÃ³n del ban").setRequired(false)).setDefaultMemberPermissions(PermissionFlagsBits.BanMembers),
-  new SlashCommandBuilder().setName("mute").setDescription("AÃ­sla temporalmente a un usuario (timeout)").addUserOption(opt => opt.setName("usuario").setDescription("Usuario a mutear").setRequired(true)).addStringOption(opt => opt.setName("tiempo").setDescription("Tiempo: 10s, 5m, 2h, 1d").setRequired(true)).addStringOption(opt => opt.setName("razon").setDescription("RazÃ³n del muteo").setRequired(false)).setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers),
-  new SlashCommandBuilder().setName("hardban").setDescription("Banea a un usuario por ID o nombre (no necesita estar en el servidor)").addStringOption(opt => opt.setName("usuario").setDescription("ID o nombre de usuario").setRequired(true)).addStringOption(opt => opt.setName("razon").setDescription("RazÃ³n del ban").setRequired(false)).setDefaultMemberPermissions(PermissionFlagsBits.BanMembers),
+  new SlashCommandBuilder().setName("botinfo").setDescription("Muestra toda la informacion del bot"),
+  new SlashCommandBuilder().setName("userinfo").setDescription("Muestra informacion de un usuario").addUserOption(opt => opt.setName("usuario").setDescription("Usuario a consultar").setRequired(false)),
+  new SlashCommandBuilder().setName("server-info").setDescription("Muestra toda la informacion del servidor"),
+  new SlashCommandBuilder().setName("kick").setDescription("Expulsa a un usuario del servidor").addUserOption(opt => opt.setName("usuario").setDescription("Usuario a expulsar").setRequired(true)).addStringOption(opt => opt.setName("razon").setDescription("Razon de la expulsion").setRequired(false)).setDefaultMemberPermissions(PermissionFlagsBits.KickMembers),
+  new SlashCommandBuilder().setName("ban").setDescription("Banea a un usuario del servidor").addUserOption(opt => opt.setName("usuario").setDescription("Usuario a banear").setRequired(true)).addStringOption(opt => opt.setName("razon").setDescription("Razon del ban").setRequired(false)).setDefaultMemberPermissions(PermissionFlagsBits.BanMembers),
+  new SlashCommandBuilder().setName("mute").setDescription("Aisla temporalmente a un usuario (timeout)").addUserOption(opt => opt.setName("usuario").setDescription("Usuario a mutear").setRequired(true)).addStringOption(opt => opt.setName("tiempo").setDescription("Tiempo: 10s, 5m, 2h, 1d").setRequired(true)).addStringOption(opt => opt.setName("razon").setDescription("Razon del muteo").setRequired(false)).setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers),
+  new SlashCommandBuilder().setName("hardban").setDescription("Banea a un usuario por ID o nombre (no necesita estar en el servidor)").addStringOption(opt => opt.setName("usuario").setDescription("ID o nombre de usuario").setRequired(true)).addStringOption(opt => opt.setName("razon").setDescription("Razon del ban").setRequired(false)).setDefaultMemberPermissions(PermissionFlagsBits.BanMembers),
   new SlashCommandBuilder().setName("kiss").setDescription("Besa a un usuario").addUserOption(opt => opt.setName("usuario").setDescription("Usuario a besar").setRequired(true)),
   new SlashCommandBuilder().setName("thug").setDescription("Abraza a un usuario").addUserOption(opt => opt.setName("usuario").setDescription("Usuario a abrazar").setRequired(true)),
   new SlashCommandBuilder().setName("voice-join").setDescription("El bot se une a un canal de voz (administrador)").addChannelOption(opt => opt.setName("canal").setDescription("Canal de voz al que unirse").addChannelTypes(ChannelType.GuildVoice, ChannelType.GuildStageVoice).setRequired(false)).addBooleanOption(opt => opt.setName("stop").setDescription("true para sacar al bot del canal de voz").setRequired(false)).setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
-  new SlashCommandBuilder().setName("fly").setDescription("EstÃ¡s volando"),
+  new SlashCommandBuilder().setName("fly").setDescription("Estas volando"),
   new SlashCommandBuilder().setName("spank").setDescription("Nalguea a un usuario").addUserOption(opt => opt.setName("usuario").setDescription("Usuario a nalguear").setRequired(true)),
   new SlashCommandBuilder().setName("punch").setDescription("Golpea a un usuario").addUserOption(opt => opt.setName("usuario").setDescription("Usuario a golpear").setRequired(true)),
   new SlashCommandBuilder().setName("like").setDescription("Apruebas algo"),
-  new SlashCommandBuilder().setName("sleep").setDescription("EstÃ¡s durmiendo"),
-  new SlashCommandBuilder().setName("dance").setDescription("EstÃ¡s bailando"),
-  new SlashCommandBuilder().setName("bot-say").setDescription("EnvÃ­a un mensaje anÃ³nimo como el bot").addStringOption(opt => opt.setName("mensaje").setDescription("Mensaje a enviar").setRequired(true)).addAttachmentOption(opt => opt.setName("file").setDescription("Archivo adjunto opcional").setRequired(false)).setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
+  new SlashCommandBuilder().setName("sleep").setDescription("Estas durmiendo"),
+  new SlashCommandBuilder().setName("dance").setDescription("Estas bailando"),
+  new SlashCommandBuilder().setName("bot-say").setDescription("Envia un mensaje anonimo como el bot").addStringOption(opt => opt.setName("mensaje").setDescription("Mensaje a enviar").setRequired(true)).addAttachmentOption(opt => opt.setName("file").setDescription("Archivo adjunto opcional").setRequired(false)).setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
 ].map(cmd => cmd.toJSON());
 
 const kissGifs = [
@@ -170,7 +170,7 @@ function parseTime(timeStr) {
 }
 
 function formatDuration(ms) {
-  if (ms < 0) return "0s";
+  if (!ms || ms < 0) return "0s";
   const seconds = Math.floor(ms / 1000);
   const days = Math.floor(seconds / 86400);
   const hours = Math.floor((seconds % 86400) / 3600);
@@ -186,6 +186,7 @@ function formatDuration(ms) {
 
 const respondedButtons = new Map();
 function wasResponded(messageId) {
+  if (!messageId) return false;
   const ts = respondedButtons.get(messageId);
   if (!ts) return false;
   if (Date.now() - ts > 24 * 3600 * 1000) {
@@ -195,7 +196,7 @@ function wasResponded(messageId) {
   return true;
 }
 function markResponded(messageId) {
-  respondedButtons.set(messageId, Date.now());
+  if (messageId) respondedButtons.set(messageId, Date.now());
 }
 
 let activeVoiceConnection = null;
@@ -203,6 +204,7 @@ let targetVoiceChannelId = null;
 let targetVoiceGuildId = null;
 
 async function joinVoicePersistent(channel) {
+  if (!channel) return null;
   targetVoiceChannelId = channel.id;
   targetVoiceGuildId = channel.guild.id;
   if (activeVoiceConnection) {
@@ -216,7 +218,7 @@ async function joinVoicePersistent(channel) {
     selfDeaf: true,
     selfMute: true
   });
-  console.log(`ðŸ”Š Conectado al canal de voz: ${channel.name} (${channel.guild.name})`);
+  console.log(`Conectado al canal de voz: ${channel.name} (${channel.guild.name})`);
   activeVoiceConnection.on(VoiceConnectionStatus.Disconnected, async () => {
     setTimeout(async () => {
       try { if (activeVoiceConnection) activeVoiceConnection.destroy(); } catch (e) {}
@@ -225,7 +227,7 @@ async function joinVoicePersistent(channel) {
         try {
           const ch = await client.channels.fetch(targetVoiceChannelId).catch(() => null);
           if (ch && (ch.type === ChannelType.GuildVoice || ch.type === ChannelType.GuildStageVoice)) {
-            console.log("ðŸ” Reconectando al canal de voz...");
+            console.log("Reconectando al canal de voz...");
             joinVoicePersistent(ch);
           } else {
             targetVoiceChannelId = null;
@@ -239,6 +241,7 @@ async function joinVoicePersistent(channel) {
       }
     }, 5000);
   });
+  return activeVoiceConnection;
 }
 
 async function leaveVoice() {
@@ -254,19 +257,20 @@ async function buildBotInfoEmbed() {
   const totalMembers = client.guilds.cache.reduce((acc, g) => acc + (g.memberCount || 0), 0);
   const totalCommands = slashCommands.length;
   const prefixCommands = slashCommands.length;
+  const pingValue = (typeof client.ws.ping === "number" && client.ws.ping >= 0) ? client.ws.ping : 0;
   return new EmbedBuilder()
     .setColor(0x5865F2)
-    .setTitle(`InformaciÃ³n del Bot`)
+    .setTitle("Informacion del Bot")
     .setThumbnail(client.user.displayAvatarURL({ size: 1024 }))
     .addFields(
-      { name: "Nombre", value: client.user.username, inline: true },
-      { name: "ID", value: client.user.id, inline: true },
-      { name: "Ping", value: `${client.ws.ping}ms`, inline: true },
+      { name: "Nombre", value: String(client.user.username), inline: true },
+      { name: "ID", value: String(client.user.id), inline: true },
+      { name: "Ping", value: `${pingValue}ms`, inline: true },
       { name: "Uptime", value: formatDuration(client.uptime), inline: true },
-      { name: "Servidores", value: `${client.guilds.cache.size}`, inline: true },
-      { name: "Miembros totales", value: `${totalMembers}`, inline: true },
-      { name: "Comandos totales", value: `${totalCommands}`, inline: true },
-      { name: "Comandos por prefijo", value: `${prefixCommands}`, inline: true },
+      { name: "Servidores", value: String(client.guilds.cache.size), inline: true },
+      { name: "Miembros totales", value: String(totalMembers), inline: true },
+      { name: "Comandos totales", value: String(totalCommands), inline: true },
+      { name: "Comandos por prefijo", value: String(prefixCommands), inline: true },
       { name: "Prefijo", value: `\`${PREFIX}\``, inline: true }
     )
     .setFooter({ text: `Solicitado por ${client.user.username}` })
@@ -274,26 +278,44 @@ async function buildBotInfoEmbed() {
 }
 
 async function buildUserInfoEmbed(targetUser, guild) {
-  const fullUser = await client.users.fetch(targetUser.id, { force: true }).catch(() => targetUser);
-  const member = await guild.members.fetch(targetUser.id).catch(() => null);
+  if (!targetUser) return null;
+  let fullUser = targetUser;
+  try {
+    fullUser = await client.users.fetch(targetUser.id, { force: true });
+  } catch (e) {
+    console.error("Error fetching user:", e);
+  }
+  let member = null;
+  if (guild) {
+    try {
+      member = await guild.members.fetch(targetUser.id);
+    } catch (e) {}
+  }
   const embed = new EmbedBuilder()
     .setColor(0x3498db)
-    .setTitle(`InformaciÃ³n de ${fullUser.username}`)
+    .setTitle(`Informacion de ${fullUser.username}`)
     .setThumbnail(fullUser.displayAvatarURL({ size: 1024 }));
   const fields = [
-    { name: "Display Name", value: member?.displayName || fullUser.displayName || fullUser.username, inline: true },
-    { name: "Username", value: fullUser.username, inline: true },
-    { name: "ID", value: fullUser.id, inline: true },
-    { name: "Cuenta creada", value: `<t:${Math.floor(fullUser.createdTimestamp / 1000)}:F>\n(<t:${Math.floor(fullUser.createdTimestamp / 1000)}:R>)`, inline: false }
+    { name: "Display Name", value: String(member?.displayName || fullUser.displayName || fullUser.username), inline: true },
+    { name: "Username", value: String(fullUser.username), inline: true },
+    { name: "ID", value: String(fullUser.id), inline: true }
   ];
-  if (member) {
-    const joinedTs = Math.floor(member.joinedTimestamp / 1000);
-    fields.push({ name: "EntrÃ³ al servidor", value: `<t:${joinedTs}:F>\n(<t:${joinedTs}:R>)`, inline: false });
-    fields.push({ name: "Tiempo en el servidor", value: formatDuration(Date.now() - member.joinedTimestamp), inline: true });
-    fields.push({ name: "Roles", value: `${Math.max(0, member.roles.cache.size - 1)}`, inline: true });
+  if (fullUser.createdTimestamp) {
+    const ts = Math.floor(fullUser.createdTimestamp / 1000);
+    fields.push({ name: "Cuenta creada", value: `<t:${ts}:F>\n(<t:${ts}:R>)`, inline: false });
   }
-  const bannerUrl = fullUser.bannerURL({ size: 1024 });
-  fields.push({ name: "Avatar", value: `[Ver avatar](${fullUser.displayAvatarURL({ size: 1024 })})`, inline: true });
+  if (member && member.joinedTimestamp) {
+    const joinedTs = Math.floor(member.joinedTimestamp / 1000);
+    fields.push({ name: "Entro al servidor", value: `<t:${joinedTs}:F>\n(<t:${joinedTs}:R>)`, inline: false });
+    fields.push({ name: "Tiempo en el servidor", value: formatDuration(Date.now() - member.joinedTimestamp), inline: true });
+    fields.push({ name: "Roles", value: String(Math.max(0, member.roles.cache.size - 1)), inline: true });
+  }
+  const avatarUrl = fullUser.displayAvatarURL({ size: 1024 });
+  fields.push({ name: "Avatar", value: `[Ver avatar](${avatarUrl})`, inline: true });
+  let bannerUrl = null;
+  try {
+    bannerUrl = fullUser.bannerURL({ size: 1024 });
+  } catch (e) {}
   fields.push({ name: "Banner", value: bannerUrl ? `[Ver banner](${bannerUrl})` : "No tiene banner", inline: true });
   if (bannerUrl) embed.setImage(bannerUrl);
   embed.addFields(fields);
@@ -301,202 +323,231 @@ async function buildUserInfoEmbed(targetUser, guild) {
 }
 
 async function buildServerInfoEmbed(guild) {
-  const owner = await guild.fetchOwner().catch(() => null);
-  const iconUrl = guild.iconURL({ size: 1024 });
+  if (!guild) return null;
+  let owner = null;
+  try {
+    owner = await guild.fetchOwner();
+  } catch (e) {
+    console.error("Error fetching owner:", e);
+  }
+  const iconUrl = guild.iconURL ? guild.iconURL({ size: 1024 }) : null;
   return new EmbedBuilder()
     .setColor(0x2ecc71)
-    .setTitle(`InformaciÃ³n de ${guild.name}`)
+    .setTitle(`Informacion de ${guild.name}`)
     .setThumbnail(iconUrl || client.user.displayAvatarURL())
     .addFields(
-      { name: "ID del servidor", value: guild.id, inline: true },
-      { name: "DueÃ±o", value: owner ? `<@${owner.id}>` : `<@${guild.ownerId}>`, inline: true },
-      { name: "CreaciÃ³n", value: `<t:${Math.floor(guild.createdTimestamp / 1000)}:F>`, inline: true },
-      { name: "Miembros", value: `${guild.memberCount}`, inline: true },
-      { name: "Canales", value: `${guild.channels.cache.size}`, inline: true },
-      { name: "Emojis", value: `${guild.emojis.cache.size}`, inline: true },
-      { name: "Boosts", value: `${guild.premiumSubscriptionCount || 0}`, inline: true },
-      { name: "Roles", value: `${guild.roles.cache.size}`, inline: true }
+      { name: "ID del servidor", value: String(guild.id), inline: true },
+      { name: "Dueno", value: owner ? `<@${owner.id}>` : `<@${guild.ownerId}>`, inline: true },
+      { name: "Creacion", value: `<t:${Math.floor(guild.createdTimestamp / 1000)}:F>`, inline: true },
+      { name: "Miembros", value: String(guild.memberCount || 0), inline: true },
+      { name: "Canales", value: String(guild.channels?.cache?.size || 0), inline: true },
+      { name: "Emojis", value: String(guild.emojis?.cache?.size || 0), inline: true },
+      { name: "Boosts", value: String(guild.premiumSubscriptionCount || 0), inline: true },
+      { name: "Roles", value: String(guild.roles?.cache?.size || 0), inline: true }
     )
-    .setFooter({ text: guild.name })
+    .setFooter({ text: String(guild.name) })
     .setTimestamp();
 }
 
 async function executeKiss(target, sender) {
-  if (target.id === sender.id) return { content: "Â¡No puedes besarte a ti mismo! ðŸ˜…" };
-  if (target.bot) return { content: "No puedes besar a un bot... ðŸ¤–" };
-  const phrases = [`${sender} besa con pasiÃ³n a ${target}`, `${sender} besa a ${target}`];
+  if (!target || !sender) return { content: "Falta un usuario." };
+  if (target.id === sender.id) return { content: "No puedes besarte a ti mismo!" };
+  if (target.bot) return { content: "No puedes besar a un bot." };
+  const phrases = [`${sender} besa con pasion a ${target}`, `${sender} besa a ${target}`];
   const embed = new EmbedBuilder().setColor(0xFF69B4).setDescription(randomFrom(phrases)).setImage(randomFrom(kissGifs));
   const row = new ActionRowBuilder().addComponents(
-    new ButtonBuilder().setCustomId(`kiss_corresponder_${target.id}_${sender.id}`).setLabel("Corresponder").setEmoji("ðŸ’•").setStyle(ButtonStyle.Primary),
-    new ButtonBuilder().setCustomId(`kiss_rechazar_${target.id}_${sender.id}`).setLabel("Rechazar").setEmoji("âŒ").setStyle(ButtonStyle.Danger)
+    new ButtonBuilder().setCustomId(`kiss_corresponder_${target.id}_${sender.id}`).setLabel("Corresponder").setStyle(ButtonStyle.Primary),
+    new ButtonBuilder().setCustomId(`kiss_rechazar_${target.id}_${sender.id}`).setLabel("Rechazar").setStyle(ButtonStyle.Danger)
   );
   return { embeds: [embed], components: [row] };
 }
 
 async function executeThug(target, sender) {
-  if (target.id === sender.id) return { content: "Â¡No puedes abrazarte a ti mismo! ðŸ˜…" };
-  if (target.bot) return { content: "No puedes abrazar a un bot... ðŸ¤–" };
+  if (!target || !sender) return { content: "Falta un usuario." };
+  if (target.id === sender.id) return { content: "No puedes abrazarte a ti mismo!" };
+  if (target.bot) return { content: "No puedes abrazar a un bot." };
   const embed = new EmbedBuilder().setColor(0xFF69B4).setDescription(`${sender} abraza a ${target}`).setImage(randomFrom(hugGifs));
   const row = new ActionRowBuilder().addComponents(
-    new ButtonBuilder().setCustomId(`thug_volver_${target.id}_${sender.id}`).setLabel("Abrazar de vuelta").setEmoji("ðŸ¤—").setStyle(ButtonStyle.Primary)
+    new ButtonBuilder().setCustomId(`thug_volver_${target.id}_${sender.id}`).setLabel("Abrazar de vuelta").setStyle(ButtonStyle.Primary)
   );
   return { embeds: [embed], components: [row] };
 }
 
 async function executeFly(sender) {
-  const embed = new EmbedBuilder().setColor(0x87CEEB).setDescription(`${sender} estÃ¡ volando.`).setImage(randomFrom(flyGifs));
+  if (!sender) return { content: "Error: usuario no valido." };
+  const embed = new EmbedBuilder().setColor(0x87CEEB).setDescription(`${sender} esta volando.`).setImage(randomFrom(flyGifs));
   return { embeds: [embed] };
 }
 
 async function executeSpank(target, sender) {
-  if (target.id === sender.id) return { content: "Â¡No puedes nalguearte a ti mismo! ðŸ˜…" };
-  if (target.bot) return { content: "No puedes nalguear a un bot... ðŸ¤–" };
+  if (!target || !sender) return { content: "Falta un usuario." };
+  if (target.id === sender.id) return { content: "No puedes nalguearte a ti mismo!" };
+  if (target.bot) return { content: "No puedes nalguear a un bot." };
   const phrases = [`${sender} nalguea el trasero de ${target}`, `${sender} nalguea a ${target}`];
   const embed = new EmbedBuilder().setColor(0xFF4500).setDescription(randomFrom(phrases)).setImage(randomFrom(spankGifs));
   const row = new ActionRowBuilder().addComponents(
-    new ButtonBuilder().setCustomId(`spank_golpear_${target.id}_${sender.id}`).setLabel("Golpear").setEmoji("ðŸ¤œ").setStyle(ButtonStyle.Danger)
+    new ButtonBuilder().setCustomId(`spank_golpear_${target.id}_${sender.id}`).setLabel("Golpear").setStyle(ButtonStyle.Danger)
   );
   return { embeds: [embed], components: [row] };
 }
 
 async function executePunch(target, sender) {
-  if (target.id === sender.id) return { content: "Â¡No puedes golpearte a ti mismo! ðŸ˜…" };
-  if (target.bot) return { content: "No puedes golpear a un bot... ðŸ¤–" };
+  if (!target || !sender) return { content: "Falta un usuario." };
+  if (target.id === sender.id) return { content: "No puedes golpearte a ti mismo!" };
+  if (target.bot) return { content: "No puedes golpear a un bot." };
   const embed = new EmbedBuilder().setColor(0xFF4500).setDescription(`${sender} golpea a ${target}!`).setImage(randomFrom(rejectGifs));
   const row = new ActionRowBuilder().addComponents(
-    new ButtonBuilder().setCustomId(`punch_volver_${target.id}_${sender.id}`).setLabel("Golpear de vuelta!").setEmoji("ðŸ¤œ").setStyle(ButtonStyle.Danger)
+    new ButtonBuilder().setCustomId(`punch_volver_${target.id}_${sender.id}`).setLabel("Golpear de vuelta!").setStyle(ButtonStyle.Danger)
   );
   return { embeds: [embed], components: [row] };
 }
 
 async function executeLike(sender) {
+  if (!sender) return { content: "Error: usuario no valido." };
   const embed = new EmbedBuilder().setColor(0xFFD700).setDescription(`${sender} lo aprueba!\nA ${sender} le gusta esto.`).setImage(randomFrom(likeGifs));
   return { embeds: [embed] };
 }
 
 async function executeSleep(sender) {
-  const embed = new EmbedBuilder().setColor(0x6A5ACD).setDescription(`${sender} estÃ¡ durmiendo..ðŸ’¤`).setImage(randomFrom(sleepGifs));
+  if (!sender) return { content: "Error: usuario no valido." };
+  const embed = new EmbedBuilder().setColor(0x6A5ACD).setDescription(`${sender} esta durmiendo..`).setImage(randomFrom(sleepGifs));
   return { embeds: [embed] };
 }
 
 async function executeDance(sender) {
-  const embed = new EmbedBuilder().setColor(0xFF1493).setDescription(`${sender} estÃ¡ bailando..ðŸ’ƒðŸ»`).setImage(randomFrom(danceGifs));
+  if (!sender) return { content: "Error: usuario no valido." };
+  const embed = new EmbedBuilder().setColor(0xFF1493).setDescription(`${sender} esta bailando..`).setImage(randomFrom(danceGifs));
   return { embeds: [embed] };
 }
 
 async function registrarComandosGlobales() {
   try {
+    console.log("Obteniendo informacion de la aplicacion...");
+    await client.application.fetch();
     console.log("Registrando comandos slash globales...");
     await client.application.commands.set(slashCommands);
-    console.log(`âœ… ${slashCommands.length} comandos slash registrados globalmente.`);
+    console.log(`${slashCommands.length} comandos slash registrados globalmente.`);
   } catch (error) {
     console.error("Error registrando comandos slash:", error);
   }
 }
 
 client.once("ready", async () => {
-  console.log(`âœ… Bot conectado como ${client.user.tag}`);
-  console.log(`   Servidores: ${client.guilds.cache.size}`);
-  console.log(`   Miembros totales: ${client.guilds.cache.reduce((a, g) => a + g.memberCount, 0)}`);
-  await registrarComandosGlobales();
+  try {
+    console.log(`Bot conectado como ${client.user.tag}`);
+    console.log(`Servidores: ${client.guilds.cache.size}`);
+    console.log(`Miembros totales: ${client.guilds.cache.reduce((a, g) => a + g.memberCount, 0)}`);
+    await registrarComandosGlobales();
+  } catch (e) {
+    console.error("Error en ready:", e);
+  }
 });
 
 client.on("guildCreate", async (guild) => {
-  console.log(`âž• AÃ±adido a nuevo servidor: ${guild.name} (${guild.id})`);
-  console.log("   Los comandos slash globales se sincronizarÃ¡n automÃ¡ticamente.");
+  console.log(`Anadido a nuevo servidor: ${guild.name} (${guild.id})`);
 });
 
 client.on("messageCreate", async message => {
-  if (message.author.bot || !message.guild) return;
-  if (!message.content.toLowerCase().startsWith(PREFIX)) return;
-  const args = message.content.slice(PREFIX.length).trim().split(/\s+/);
-  const command = args.shift()?.toLowerCase();
-  if (!command) return;
-  const getTarget = async () => {
-    let user = message.mentions.users.first();
-    if (user) return user;
-    if (message.reference?.messageId) {
-      const refMsg = await message.channel.messages.fetch(message.reference.messageId).catch(() => null);
-      if (refMsg) return refMsg.author;
-    }
-    return null;
-  };
   try {
+    if (!message || !message.author || message.author.bot || !message.guild) return;
+    if (!message.content || typeof message.content !== "string") return;
+    if (!message.content.toLowerCase().startsWith(PREFIX)) return;
+
+    const args = message.content.slice(PREFIX.length).trim().split(/\s+/);
+    const command = args.shift()?.toLowerCase();
+    if (!command) return;
+
+    const getTarget = async () => {
+      try {
+        let user = message.mentions?.users?.first();
+        if (user) return user;
+        if (message.reference?.messageId) {
+          const refMsg = await message.channel.messages.fetch(message.reference.messageId).catch(() => null);
+          if (refMsg) return refMsg.author;
+        }
+      } catch (e) {
+        console.error("Error en getTarget:", e);
+      }
+      return null;
+    };
+
     if (command === "botinfo") {
       const embed = await buildBotInfoEmbed();
-      return message.reply({ embeds: [embed] });
+      return message.reply({ embeds: [embed] }).catch(e => console.error("reply error:", e));
     }
     if (command === "userinfo") {
       const target = await getTarget() || message.author;
       const embed = await buildUserInfoEmbed(target, message.guild);
-      return message.reply({ embeds: [embed] });
+      if (!embed) return message.reply("No se pudo construir la informacion del usuario.");
+      return message.reply({ embeds: [embed] }).catch(e => console.error("reply error:", e));
     }
     if (command === "serverinfo") {
       const embed = await buildServerInfoEmbed(message.guild);
-      return message.reply({ embeds: [embed] });
+      if (!embed) return message.reply("No se pudo construir la informacion del servidor.");
+      return message.reply({ embeds: [embed] }).catch(e => console.error("reply error:", e));
     }
     if (command === "kick") {
-      if (!message.memberPermissions?.has(PermissionFlagsBits.KickMembers)) return message.reply("âŒ No tienes permiso para expulsar usuarios.");
+      if (!message.memberPermissions?.has(PermissionFlagsBits.KickMembers)) return message.reply("No tienes permiso para expulsar usuarios.");
       const target = await getTarget();
-      if (!target) return message.reply("Menciona a alguien o responde a su mensaje. `tkick @user`");
-      const reason = args.filter(a => !a.startsWith("<@") && !a.startsWith("<#")).join(" ") || "Sin razÃ³n";
+      if (!target) return message.reply("Menciona a alguien o responde a su mensaje. Uso: tkick @user");
+      const reason = args.filter(a => !a.startsWith("<@") && !a.startsWith("<#")).join(" ") || "Sin razon";
       const member = await message.guild.members.fetch(target.id).catch(() => null);
-      if (!member) return message.reply("âŒ El usuario no estÃ¡ en el servidor.");
-      if (!member.kickable) return message.reply("âŒ No puedo expulsar a ese usuario (rol superior al mÃ­o o permisos insuficientes).");
+      if (!member) return message.reply("El usuario no esta en el servidor.");
+      if (!member.kickable) return message.reply("No puedo expulsar a ese usuario (rol superior o permisos insuficientes).");
       await member.kick(reason);
       const embed = new EmbedBuilder().setColor(0xFF0000).setTitle("Usuario expulsado")
         .addFields(
           { name: "Usuario", value: `${target.tag} (${target.id})`, inline: false },
-          { name: "RazÃ³n", value: reason, inline: false },
+          { name: "Razon", value: String(reason), inline: false },
           { name: "Moderador", value: `${message.author.tag}`, inline: false }
         ).setThumbnail(target.displayAvatarURL()).setTimestamp();
-      return message.reply({ embeds: [embed] });
+      return message.reply({ embeds: [embed] }).catch(e => console.error("reply error:", e));
     }
     if (command === "ban") {
-      if (!message.memberPermissions?.has(PermissionFlagsBits.BanMembers)) return message.reply("âŒ No tienes permiso para banear usuarios.");
+      if (!message.memberPermissions?.has(PermissionFlagsBits.BanMembers)) return message.reply("No tienes permiso para banear usuarios.");
       const target = await getTarget();
-      if (!target) return message.reply("Menciona a alguien o responde a su mensaje. `tban @user [razÃ³n]`");
-      const reason = args.filter(a => !a.startsWith("<@") && !a.startsWith("<#")).join(" ") || "Sin razÃ³n";
+      if (!target) return message.reply("Menciona a alguien o responde a su mensaje. Uso: tban @user [razon]");
+      const reason = args.filter(a => !a.startsWith("<@") && !a.startsWith("<#")).join(" ") || "Sin razon";
       const member = await message.guild.members.fetch(target.id).catch(() => null);
-      if (member && !member.bannable) return message.reply("âŒ No puedo banear a ese usuario (rol superior al mÃ­o).");
+      if (member && !member.bannable) return message.reply("No puedo banear a ese usuario (rol superior al mio).");
       await message.guild.members.ban(target.id, { reason });
       const embed = new EmbedBuilder().setColor(0x8B0000).setTitle("Usuario baneado")
         .addFields(
           { name: "Usuario", value: `${target.tag} (${target.id})`, inline: false },
-          { name: "RazÃ³n", value: reason, inline: false },
+          { name: "Razon", value: String(reason), inline: false },
           { name: "Moderador", value: `${message.author.tag}`, inline: false }
         ).setThumbnail(target.displayAvatarURL()).setTimestamp();
-      return message.reply({ embeds: [embed] });
+      return message.reply({ embeds: [embed] }).catch(e => console.error("reply error:", e));
     }
     if (command === "mute") {
-      if (!message.memberPermissions?.has(PermissionFlagsBits.ModerateMembers)) return message.reply("âŒ No tienes permiso para mutear usuarios.");
+      if (!message.memberPermissions?.has(PermissionFlagsBits.ModerateMembers)) return message.reply("No tienes permiso para mutear usuarios.");
       const target = await getTarget();
-      if (!target) return message.reply("Menciona a alguien o responde a su mensaje. `tmute 10s @user [razÃ³n]`");
+      if (!target) return message.reply("Menciona a alguien o responde a su mensaje. Uso: tmute 10s @user [razon]");
       let timeArg = null;
       for (const a of args) { if (/^\d+[smhd]$/.test(a)) { timeArg = a; break; } }
-      if (!timeArg) return message.reply("Debes especificar el tiempo. Ej: `10s`, `5m`, `2h`, `1d`");
+      if (!timeArg) return message.reply("Debes especificar el tiempo. Ej: 10s, 5m, 2h, 1d");
       const ms = parseTime(timeArg);
-      if (!ms) return message.reply("Formato de tiempo invÃ¡lido. Usa: `10s`, `5m`, `2h`, `1d`");
-      if (ms > 28 * 86400000) return message.reply("âŒ El tiempo mÃ¡ximo de aislamiento es 28 dÃ­as.");
-      const reason = args.filter(a => !a.startsWith("<@") && !a.startsWith("<#") && !/^\d+[smhd]$/.test(a)).join(" ") || "Sin razÃ³n";
+      if (!ms) return message.reply("Formato de tiempo invalido. Usa: 10s, 5m, 2h, 1d");
+      if (ms > 28 * 86400000) return message.reply("El tiempo maximo de aislamiento es 28 dias.");
+      const reason = args.filter(a => !a.startsWith("<@") && !a.startsWith("<#") && !/^\d+[smhd]$/.test(a)).join(" ") || "Sin razon";
       const member = await message.guild.members.fetch(target.id).catch(() => null);
-      if (!member) return message.reply("âŒ El usuario no estÃ¡ en el servidor.");
-      if (!member.moderatable) return message.reply("âŒ No puedo mutear a ese usuario (rol superior al mÃ­o).");
+      if (!member) return message.reply("El usuario no esta en el servidor.");
+      if (!member.moderatable) return message.reply("No puedo mutear a ese usuario (rol superior al mio).");
       await member.timeout(ms, reason);
       const embed = new EmbedBuilder().setColor(0xFFA500).setTitle("Usuario muteado")
         .addFields(
           { name: "Usuario", value: `${target.tag} (${target.id})`, inline: false },
-          { name: "Tiempo", value: timeArg, inline: true },
-          { name: "RazÃ³n", value: reason, inline: false },
+          { name: "Tiempo", value: String(timeArg), inline: true },
+          { name: "Razon", value: String(reason), inline: false },
           { name: "Moderador", value: `${message.author.tag}`, inline: false }
         ).setThumbnail(target.displayAvatarURL()).setTimestamp();
-      return message.reply({ embeds: [embed] });
+      return message.reply({ embeds: [embed] }).catch(e => console.error("reply error:", e));
     }
     if (command === "hardban") {
-      if (!message.memberPermissions?.has(PermissionFlagsBits.BanMembers)) return message.reply("âŒ No tienes permiso para banear usuarios.");
+      if (!message.memberPermissions?.has(PermissionFlagsBits.BanMembers)) return message.reply("No tienes permiso para banear usuarios.");
       const input = args[0];
-      if (!input) return message.reply("Uso: `thardban <id o nombre de usuario>` [razÃ³n]");
-      const reason = args.slice(1).join(" ") || "Sin razÃ³n";
+      if (!input) return message.reply("Uso: thardban <id o nombre de usuario> [razon]");
+      const reason = args.slice(1).join(" ") || "Sin razon";
       let targetUser = null;
       if (/^\d+$/.test(input)) {
         targetUser = await client.users.fetch(input).catch(() => null);
@@ -507,86 +558,86 @@ client.on("messageCreate", async message => {
           targetUser = (exact || members.first()).user;
         }
       }
-      if (!targetUser) return message.reply("âŒ No se encontrÃ³ al usuario. Usa un ID vÃ¡lido (recomendado) o un nombre de usuario exacto.");
+      if (!targetUser) return message.reply("No se encontro al usuario. Usa un ID valido (recomendado) o un nombre de usuario exacto.");
       await message.guild.members.ban(targetUser.id, { reason });
       const embed = new EmbedBuilder().setColor(0x4B0082).setTitle("Hardban aplicado")
         .addFields(
           { name: "Usuario", value: `${targetUser.tag} (${targetUser.id})`, inline: false },
-          { name: "RazÃ³n", value: reason, inline: false },
+          { name: "Razon", value: String(reason), inline: false },
           { name: "Moderador", value: `${message.author.tag}`, inline: false }
         ).setThumbnail(targetUser.displayAvatarURL()).setTimestamp();
-      return message.reply({ embeds: [embed] });
+      return message.reply({ embeds: [embed] }).catch(e => console.error("reply error:", e));
     }
     if (command === "kiss") {
       const target = await getTarget();
-      if (!target) return message.reply("Menciona a alguien o responde a su mensaje. `tkiss @user`");
+      if (!target) return message.reply("Menciona a alguien o responde a su mensaje. Uso: tkiss @user");
       const payload = await executeKiss(target, message.author);
-      return message.reply(payload);
+      return message.reply(payload).catch(e => console.error("reply error:", e));
     }
     if (command === "thug") {
       const target = await getTarget();
-      if (!target) return message.reply("Menciona a alguien o responde a su mensaje. `thug @user`");
+      if (!target) return message.reply("Menciona a alguien o responde a su mensaje. Uso: tthug @user");
       const payload = await executeThug(target, message.author);
-      return message.reply(payload);
+      return message.reply(payload).catch(e => console.error("reply error:", e));
     }
     if (command === "voicejoin" || command === "voice-join") {
-      if (!message.memberPermissions?.has(PermissionFlagsBits.Administrator)) return message.reply("âŒ Solo los administradores pueden usar este comando.");
+      if (!message.memberPermissions?.has(PermissionFlagsBits.Administrator)) return message.reply("Solo los administradores pueden usar este comando.");
       const stopArg = args.find(a => {
         const lower = a.toLowerCase();
         return lower === "stop:true" || lower === "true" || lower === "stop";
       });
-      if (stopArg) { await leaveVoice(); return message.reply("ðŸ”‡ SalÃ­ del canal de voz."); }
-      let channel = message.mentions.channels.first();
+      if (stopArg) { await leaveVoice(); return message.reply("Sali del canal de voz."); }
+      let channel = message.mentions?.channels?.first();
       if (!channel && message.member?.voice?.channel) channel = message.member.voice.channel;
-      if (!channel || (channel.type !== ChannelType.GuildVoice && channel.type !== ChannelType.GuildStageVoice)) return message.reply("Menciona un canal de voz o Ãºnete a uno primero. Uso: `tvoicejoin #canal`");
+      if (!channel || (channel.type !== ChannelType.GuildVoice && channel.type !== ChannelType.GuildStageVoice)) return message.reply("Menciona un canal de voz o unete a uno primero. Uso: tvoicejoin #canal");
       await joinVoicePersistent(channel);
-      return message.reply(`ðŸ”Š Conectado al canal de voz **${channel.name}**. Me quedarÃ© hasta que uses \`tvoicejoin stop\`.`);
+      return message.reply(`Conectado al canal de voz **${channel.name}**. Me quedare hasta que uses tvoicejoin stop.`);
     }
     if (command === "fly") {
       const payload = await executeFly(message.author);
-      return message.reply(payload);
+      return message.reply(payload).catch(e => console.error("reply error:", e));
     }
     if (command === "spank") {
       const target = await getTarget();
-      if (!target) return message.reply("Menciona a alguien o responde a su mensaje. `tspank @user`");
+      if (!target) return message.reply("Menciona a alguien o responde a su mensaje. Uso: tspank @user");
       const payload = await executeSpank(target, message.author);
-      return message.reply(payload);
+      return message.reply(payload).catch(e => console.error("reply error:", e));
     }
     if (command === "punch") {
       const target = await getTarget();
-      if (!target) return message.reply("Menciona a alguien o responde a su mensaje. `tpunch @user`");
+      if (!target) return message.reply("Menciona a alguien o responde a su mensaje. Uso: tpunch @user");
       const payload = await executePunch(target, message.author);
-      return message.reply(payload);
+      return message.reply(payload).catch(e => console.error("reply error:", e));
     }
     if (command === "like") {
       const payload = await executeLike(message.author);
-      return message.reply(payload);
+      return message.reply(payload).catch(e => console.error("reply error:", e));
     }
     if (command === "sleep") {
       const payload = await executeSleep(message.author);
-      return message.reply(payload);
+      return message.reply(payload).catch(e => console.error("reply error:", e));
     }
     if (command === "dance") {
       const payload = await executeDance(message.author);
-      return message.reply(payload);
+      return message.reply(payload).catch(e => console.error("reply error:", e));
     }
     if (command === "botsay" || command === "bot-say") {
-      if (!message.memberPermissions?.has(PermissionFlagsBits.ManageGuild)) return message.reply("âŒ No tienes permiso para usar este comando (necesitas Gestionar Servidor).");
+      if (!message.memberPermissions?.has(PermissionFlagsBits.ManageGuild)) return message.reply("No tienes permiso para usar este comando (necesitas Gestionar Servidor).");
       const msg = args.join(" ");
-      if (!msg && message.attachments.size === 0) return message.reply("Debes escribir un mensaje o adjuntar un archivo. Uso: `tbotsay <mensaje>`");
+      if (!msg && message.attachments.size === 0) return message.reply("Debes escribir un mensaje o adjuntar un archivo. Uso: tbotsay <mensaje>");
       const payload = { content: msg || "" };
       if (message.attachments.size > 0) {
         payload.files = message.attachments.map(a => ({ attachment: a.url, name: a.name }));
       }
-      await message.channel.send(payload);
+      await message.channel.send(payload).catch(e => console.error("send error:", e));
       try { await message.delete(); } catch (e) {}
       return;
     }
   } catch (error) {
-    console.error("Error en comando:", error);
-    if (error.code === 50013) return message.reply("âŒ No tengo permisos para hacer eso en este canal/servidor.");
-    if (error.code === 50007) return message.reply("âŒ No puedo enviar mensajes a ese usuario (tiene DMs cerrados).");
-    message.reply("âš ï¸ OcurriÃ³ un error al ejecutar el comando.").catch(() => {});
+    console.error("Error en messageCreate:", error);
+    if (error.code === 50013) return message.reply("No tengo permisos para hacer eso en este canal/servidor.").catch(() => {});
+    if (error.code === 50007) return message.reply("No puedo enviar mensajes a ese usuario (tiene DMs cerrados).").catch(() => {});
+    message.reply("Ocurrio un error al ejecutar el comando.").catch(() => {});
   }
 });
 
@@ -594,61 +645,84 @@ client.on("interactionCreate", async interaction => {
   try {
     if (interaction.isChatInputCommand()) {
       const cmd = interaction.commandName;
-      if (cmd === "botinfo") { const embed = await buildBotInfoEmbed(); return interaction.reply({ embeds: [embed] }); }
-      if (cmd === "userinfo") { const target = interaction.options.getUser("usuario") || interaction.user; const embed = await buildUserInfoEmbed(target, interaction.guild); return interaction.reply({ embeds: [embed] }); }
-      if (cmd === "server-info") { const embed = await buildServerInfoEmbed(interaction.guild); return interaction.reply({ embeds: [embed] }); }
+
+      if (cmd === "botinfo") {
+        await interaction.deferReply();
+        const embed = await buildBotInfoEmbed();
+        return interaction.editReply({ embeds: [embed] }).catch(e => console.error("editReply error:", e));
+      }
+      if (cmd === "userinfo") {
+        await interaction.deferReply();
+        const target = interaction.options.getUser("usuario") || interaction.user;
+        const embed = await buildUserInfoEmbed(target, interaction.guild);
+        if (!embed) return interaction.editReply({ content: "No se pudo construir la informacion." });
+        return interaction.editReply({ embeds: [embed] }).catch(e => console.error("editReply error:", e));
+      }
+      if (cmd === "server-info") {
+        await interaction.deferReply();
+        const embed = await buildServerInfoEmbed(interaction.guild);
+        if (!embed) return interaction.editReply({ content: "No se pudo construir la informacion." });
+        return interaction.editReply({ embeds: [embed] }).catch(e => console.error("editReply error:", e));
+      }
       if (cmd === "kick") {
+        await interaction.deferReply();
         const target = interaction.options.getUser("usuario");
-        const reason = interaction.options.getString("razon") || "Sin razÃ³n";
+        const reason = interaction.options.getString("razon") || "Sin razon";
+        if (!target) return interaction.editReply({ content: "Usuario no valido." });
         const member = await interaction.guild.members.fetch(target.id).catch(() => null);
-        if (!member) return interaction.reply({ content: "âŒ El usuario no estÃ¡ en el servidor.", ephemeral: true });
-        if (!member.kickable) return interaction.reply({ content: "âŒ No puedo expulsar a ese usuario.", ephemeral: true });
+        if (!member) return interaction.editReply({ content: "El usuario no esta en el servidor." });
+        if (!member.kickable) return interaction.editReply({ content: "No puedo expulsar a ese usuario." });
         await member.kick(reason);
         const embed = new EmbedBuilder().setColor(0xFF0000).setTitle("Usuario expulsado")
           .addFields(
             { name: "Usuario", value: `${target.tag} (${target.id})`, inline: false },
-            { name: "RazÃ³n", value: reason, inline: false },
+            { name: "Razon", value: String(reason), inline: false },
             { name: "Moderador", value: `${interaction.user.tag}`, inline: false }
           ).setThumbnail(target.displayAvatarURL()).setTimestamp();
-        return interaction.reply({ embeds: [embed] });
+        return interaction.editReply({ embeds: [embed] }).catch(e => console.error("editReply error:", e));
       }
       if (cmd === "ban") {
+        await interaction.deferReply();
         const target = interaction.options.getUser("usuario");
-        const reason = interaction.options.getString("razon") || "Sin razÃ³n";
+        const reason = interaction.options.getString("razon") || "Sin razon";
+        if (!target) return interaction.editReply({ content: "Usuario no valido." });
         const member = await interaction.guild.members.fetch(target.id).catch(() => null);
-        if (member && !member.bannable) return interaction.reply({ content: "âŒ No puedo banear a ese usuario.", ephemeral: true });
+        if (member && !member.bannable) return interaction.editReply({ content: "No puedo banear a ese usuario." });
         await interaction.guild.members.ban(target.id, { reason });
         const embed = new EmbedBuilder().setColor(0x8B0000).setTitle("Usuario baneado")
           .addFields(
             { name: "Usuario", value: `${target.tag} (${target.id})`, inline: false },
-            { name: "RazÃ³n", value: reason, inline: false },
+            { name: "Razon", value: String(reason), inline: false },
             { name: "Moderador", value: `${interaction.user.tag}`, inline: false }
           ).setThumbnail(target.displayAvatarURL()).setTimestamp();
-        return interaction.reply({ embeds: [embed] });
+        return interaction.editReply({ embeds: [embed] }).catch(e => console.error("editReply error:", e));
       }
       if (cmd === "mute") {
+        await interaction.deferReply();
         const target = interaction.options.getUser("usuario");
         const timeStr = interaction.options.getString("tiempo");
-        const reason = interaction.options.getString("razon") || "Sin razÃ³n";
+        const reason = interaction.options.getString("razon") || "Sin razon";
+        if (!target) return interaction.editReply({ content: "Usuario no valido." });
         const ms = parseTime(timeStr);
-        if (!ms) return interaction.reply({ content: "Formato de tiempo invÃ¡lido. Usa: `10s`, `5m`, `2h`, `1d`", ephemeral: true });
-        if (ms > 28 * 86400000) return interaction.reply({ content: "âŒ El tiempo mÃ¡ximo es 28 dÃ­as.", ephemeral: true });
+        if (!ms) return interaction.editReply({ content: "Formato de tiempo invalido. Usa: 10s, 5m, 2h, 1d" });
+        if (ms > 28 * 86400000) return interaction.editReply({ content: "El tiempo maximo es 28 dias." });
         const member = await interaction.guild.members.fetch(target.id).catch(() => null);
-        if (!member) return interaction.reply({ content: "âŒ El usuario no estÃ¡ en el servidor.", ephemeral: true });
-        if (!member.moderatable) return interaction.reply({ content: "âŒ No puedo mutear a ese usuario.", ephemeral: true });
+        if (!member) return interaction.editReply({ content: "El usuario no esta en el servidor." });
+        if (!member.moderatable) return interaction.editReply({ content: "No puedo mutear a ese usuario." });
         await member.timeout(ms, reason);
         const embed = new EmbedBuilder().setColor(0xFFA500).setTitle("Usuario muteado")
           .addFields(
             { name: "Usuario", value: `${target.tag} (${target.id})`, inline: false },
-            { name: "Tiempo", value: timeStr, inline: true },
-            { name: "RazÃ³n", value: reason, inline: false },
+            { name: "Tiempo", value: String(timeStr), inline: true },
+            { name: "Razon", value: String(reason), inline: false },
             { name: "Moderador", value: `${interaction.user.tag}`, inline: false }
           ).setThumbnail(target.displayAvatarURL()).setTimestamp();
-        return interaction.reply({ embeds: [embed] });
+        return interaction.editReply({ embeds: [embed] }).catch(e => console.error("editReply error:", e));
       }
       if (cmd === "hardban") {
+        await interaction.deferReply();
         const input = interaction.options.getString("usuario");
-        const reason = interaction.options.getString("razon") || "Sin razÃ³n";
+        const reason = interaction.options.getString("razon") || "Sin razon";
         let targetUser = null;
         if (/^\d+$/.test(input)) {
           targetUser = await client.users.fetch(input).catch(() => null);
@@ -659,132 +733,250 @@ client.on("interactionCreate", async interaction => {
             targetUser = (exact || members.first()).user;
           }
         }
-        if (!targetUser) return interaction.reply({ content: "âŒ Usuario no encontrado.", ephemeral: true });
+        if (!targetUser) return interaction.editReply({ content: "Usuario no encontrado." });
         await interaction.guild.members.ban(targetUser.id, { reason });
         const embed = new EmbedBuilder().setColor(0x4B0082).setTitle("Hardban aplicado")
           .addFields(
             { name: "Usuario", value: `${targetUser.tag} (${targetUser.id})`, inline: false },
-            { name: "RazÃ³n", value: reason, inline: false },
+            { name: "Razon", value: String(reason), inline: false },
             { name: "Moderador", value: `${interaction.user.tag}`, inline: false }
           ).setThumbnail(targetUser.displayAvatarURL()).setTimestamp();
-        return interaction.reply({ embeds: [embed] });
+        return interaction.editReply({ embeds: [embed] }).catch(e => console.error("editReply error:", e));
       }
-      if (cmd === "kiss") { const target = interaction.options.getUser("usuario"); const payload = await executeKiss(target, interaction.user); return interaction.reply(payload); }
-      if (cmd === "thug") { const target = interaction.options.getUser("usuario"); const payload = await executeThug(target, interaction.user); return interaction.reply(payload); }
+      if (cmd === "kiss") {
+        const target = interaction.options.getUser("usuario");
+        if (!target) return interaction.reply({ content: "Usuario no valido.", ephemeral: true });
+        const payload = await executeKiss(target, interaction.user);
+        return interaction.reply(payload).catch(e => console.error("reply error:", e));
+      }
+      if (cmd === "thug") {
+        const target = interaction.options.getUser("usuario");
+        if (!target) return interaction.reply({ content: "Usuario no valido.", ephemeral: true });
+        const payload = await executeThug(target, interaction.user);
+        return interaction.reply(payload).catch(e => console.error("reply error:", e));
+      }
       if (cmd === "voice-join") {
+        await interaction.deferReply();
         const stop = interaction.options.getBoolean("stop");
-        if (stop) { await leaveVoice(); return interaction.reply({ content: "ðŸ”‡ SalÃ­ del canal de voz." }); }
+        if (stop) {
+          await leaveVoice();
+          return interaction.editReply({ content: "Sali del canal de voz." });
+        }
         let channel = interaction.options.getChannel("canal");
         if (!channel && interaction.member?.voice?.channel) channel = interaction.member.voice.channel;
-        if (!channel || (channel.type !== ChannelType.GuildVoice && channel.type !== ChannelType.GuildStageVoice)) return interaction.reply({ content: "Menciona un canal de voz o Ãºnete a uno primero.", ephemeral: true });
+        if (!channel || (channel.type !== ChannelType.GuildVoice && channel.type !== ChannelType.GuildStageVoice)) return interaction.editReply({ content: "Menciona un canal de voz o unete a uno primero." });
         await joinVoicePersistent(channel);
-        return interaction.reply({ content: `ðŸ”Š Conectado a **${channel.name}**. Me quedarÃ© hasta que uses \`/voice-join stop: true\`.` });
+        return interaction.editReply({ content: `Conectado a **${channel.name}**. Me quedare hasta que uses /voice-join stop: true.` });
       }
-      if (cmd === "fly") { const payload = await executeFly(interaction.user); return interaction.reply(payload); }
-      if (cmd === "spank") { const target = interaction.options.getUser("usuario"); const payload = await executeSpank(target, interaction.user); return interaction.reply(payload); }
-      if (cmd === "punch") { const target = interaction.options.getUser("usuario"); const payload = await executePunch(target, interaction.user); return interaction.reply(payload); }
-      if (cmd === "like") { const payload = await executeLike(interaction.user); return interaction.reply(payload); }
-      if (cmd === "sleep") { const payload = await executeSleep(interaction.user); return interaction.reply(payload); }
-      if (cmd === "dance") { const payload = await executeDance(interaction.user); return interaction.reply(payload); }
+      if (cmd === "fly") {
+        const payload = await executeFly(interaction.user);
+        return interaction.reply(payload).catch(e => console.error("reply error:", e));
+      }
+      if (cmd === "spank") {
+        const target = interaction.options.getUser("usuario");
+        if (!target) return interaction.reply({ content: "Usuario no valido.", ephemeral: true });
+        const payload = await executeSpank(target, interaction.user);
+        return interaction.reply(payload).catch(e => console.error("reply error:", e));
+      }
+      if (cmd === "punch") {
+        const target = interaction.options.getUser("usuario");
+        if (!target) return interaction.reply({ content: "Usuario no valido.", ephemeral: true });
+        const payload = await executePunch(target, interaction.user);
+        return interaction.reply(payload).catch(e => console.error("reply error:", e));
+      }
+      if (cmd === "like") {
+        const payload = await executeLike(interaction.user);
+        return interaction.reply(payload).catch(e => console.error("reply error:", e));
+      }
+      if (cmd === "sleep") {
+        const payload = await executeSleep(interaction.user);
+        return interaction.reply(payload).catch(e => console.error("reply error:", e));
+      }
+      if (cmd === "dance") {
+        const payload = await executeDance(interaction.user);
+        return interaction.reply(payload).catch(e => console.error("reply error:", e));
+      }
       if (cmd === "bot-say") {
+        await interaction.deferReply({ ephemeral: true });
         const msg = interaction.options.getString("mensaje");
         const attachment = interaction.options.getAttachment("file");
-        const payload = { content: msg };
+        const payload = { content: String(msg || "") };
         if (attachment) {
           payload.files = [{ attachment: attachment.url, name: attachment.name }];
         }
-        await interaction.channel.send(payload);
-        return interaction.reply({ content: "âœ… Mensaje enviado de forma anÃ³nima.", ephemeral: true });
+        try {
+          await interaction.channel.send(payload);
+          return interaction.editReply({ content: "Mensaje enviado de forma anonima." });
+        } catch (e) {
+          console.error("bot-say send error:", e);
+          return interaction.editReply({ content: "Error al enviar el mensaje: " + e.message });
+        }
       }
+
+      return interaction.reply({ content: "Comando no reconocido.", ephemeral: true }).catch(() => {});
     }
+
     if (interaction.isButton()) {
-      const id = interaction.customId;
+      const id = interaction.customId || "";
+
       if (id.startsWith("kiss_corresponder_")) {
         const parts = id.split("_");
         const targetId = parts[2];
         const senderId = parts[3];
-        if (interaction.user.id !== targetId) return interaction.reply({ content: "âŒ Solo el usuario besado puede usar este botÃ³n.", ephemeral: true });
-        if (wasResponded(interaction.message.id)) return interaction.reply({ content: "âŒ Este mensaje ya fue respondido.", ephemeral: true });
-        markResponded(interaction.message.id);
+
+        if (interaction.user.id !== targetId) {
+          return interaction.reply({ content: "Solo el usuario besado puede usar este boton.", ephemeral: true }).catch(() => {});
+        }
+        if (wasResponded(interaction.message?.id)) {
+          return interaction.reply({ content: "Este mensaje ya fue respondido.", ephemeral: true }).catch(() => {});
+        }
+        markResponded(interaction.message?.id);
+
         const sender = await client.users.fetch(senderId).catch(() => null);
         const target = interaction.user;
-        const oldRow = ActionRowBuilder.from(interaction.message.components[0]);
-        oldRow.components.forEach(c => c.setDisabled(true));
-        await interaction.update({ components: [oldRow] });
+
+        if (interaction.message?.components?.[0]) {
+          const oldRow = ActionRowBuilder.from(interaction.message.components[0]);
+          oldRow.components.forEach(c => c.setDisabled(true));
+          await interaction.update({ components: [oldRow] }).catch(e => console.error("update error:", e));
+        } else {
+          await interaction.deferUpdate().catch(() => {});
+        }
+
         const embed = new EmbedBuilder().setColor(0xFF69B4).setDescription(`${target} besa de vuelta a ${sender}`).setImage(randomFrom(kissGifs));
-        return interaction.followUp({ embeds: [embed] });
+        return interaction.followUp({ embeds: [embed] }).catch(e => console.error("followUp error:", e));
       }
+
       if (id.startsWith("kiss_rechazar_")) {
         const parts = id.split("_");
         const targetId = parts[2];
         const senderId = parts[3];
-        if (interaction.user.id !== targetId) return interaction.reply({ content: "âŒ Solo el usuario besado puede usar este botÃ³n.", ephemeral: true });
-        if (wasResponded(interaction.message.id)) return interaction.reply({ content: "âŒ Este mensaje ya fue respondido.", ephemeral: true });
-        markResponded(interaction.message.id);
+
+        if (interaction.user.id !== targetId) {
+          return interaction.reply({ content: "Solo el usuario besado puede usar este boton.", ephemeral: true }).catch(() => {});
+        }
+        if (wasResponded(interaction.message?.id)) {
+          return interaction.reply({ content: "Este mensaje ya fue respondido.", ephemeral: true }).catch(() => {});
+        }
+        markResponded(interaction.message?.id);
+
         const sender = await client.users.fetch(senderId).catch(() => null);
         const target = interaction.user;
-        const oldRow = ActionRowBuilder.from(interaction.message.components[0]);
-        oldRow.components.forEach(c => c.setDisabled(true));
-        await interaction.update({ components: [oldRow] });
+
+        if (interaction.message?.components?.[0]) {
+          const oldRow = ActionRowBuilder.from(interaction.message.components[0]);
+          oldRow.components.forEach(c => c.setDisabled(true));
+          await interaction.update({ components: [oldRow] }).catch(e => console.error("update error:", e));
+        } else {
+          await interaction.deferUpdate().catch(() => {});
+        }
+
         const embed = new EmbedBuilder().setColor(0x808080).setDescription(`${target} rechaza el beso de ${sender}`).setImage(randomFrom(rejectGifs));
-        return interaction.followUp({ embeds: [embed] });
+        return interaction.followUp({ embeds: [embed] }).catch(e => console.error("followUp error:", e));
       }
+
       if (id.startsWith("thug_volver_")) {
         const parts = id.split("_");
         const targetId = parts[2];
         const senderId = parts[3];
-        if (interaction.user.id !== targetId) return interaction.reply({ content: "âŒ Solo el usuario abrazado puede usar este botÃ³n.", ephemeral: true });
-        if (wasResponded(interaction.message.id)) return interaction.reply({ content: "âŒ Este mensaje ya fue respondido.", ephemeral: true });
-        markResponded(interaction.message.id);
+
+        if (interaction.user.id !== targetId) {
+          return interaction.reply({ content: "Solo el usuario abrazado puede usar este boton.", ephemeral: true }).catch(() => {});
+        }
+        if (wasResponded(interaction.message?.id)) {
+          return interaction.reply({ content: "Este mensaje ya fue respondido.", ephemeral: true }).catch(() => {});
+        }
+        markResponded(interaction.message?.id);
+
         const sender = await client.users.fetch(senderId).catch(() => null);
         const target = interaction.user;
-        const oldRow = ActionRowBuilder.from(interaction.message.components[0]);
-        oldRow.components.forEach(c => c.setDisabled(true));
-        await interaction.update({ components: [oldRow] });
+
+        if (interaction.message?.components?.[0]) {
+          const oldRow = ActionRowBuilder.from(interaction.message.components[0]);
+          oldRow.components.forEach(c => c.setDisabled(true));
+          await interaction.update({ components: [oldRow] }).catch(e => console.error("update error:", e));
+        } else {
+          await interaction.deferUpdate().catch(() => {});
+        }
+
         const embed = new EmbedBuilder().setColor(0xFF69B4).setDescription(`${target} abraza de vuelta a ${sender}`).setImage(randomFrom(hugGifs));
-        return interaction.followUp({ embeds: [embed] });
+        return interaction.followUp({ embeds: [embed] }).catch(e => console.error("followUp error:", e));
       }
+
       if (id.startsWith("spank_golpear_")) {
         const parts = id.split("_");
         const targetId = parts[2];
         const senderId = parts[3];
-        if (interaction.user.id !== targetId) return interaction.reply({ content: "âŒ Solo el usuario nalgueado puede usar este botÃ³n.", ephemeral: true });
-        if (wasResponded(interaction.message.id)) return interaction.reply({ content: "âŒ Este mensaje ya fue respondido.", ephemeral: true });
-        markResponded(interaction.message.id);
+
+        if (interaction.user.id !== targetId) {
+          return interaction.reply({ content: "Solo el usuario nalgueado puede usar este boton.", ephemeral: true }).catch(() => {});
+        }
+        if (wasResponded(interaction.message?.id)) {
+          return interaction.reply({ content: "Este mensaje ya fue respondido.", ephemeral: true }).catch(() => {});
+        }
+        markResponded(interaction.message?.id);
+
         const sender = await client.users.fetch(senderId).catch(() => null);
         const target = interaction.user;
-        const oldRow = ActionRowBuilder.from(interaction.message.components[0]);
-        oldRow.components.forEach(c => c.setDisabled(true));
-        await interaction.update({ components: [oldRow] });
+
+        if (interaction.message?.components?.[0]) {
+          const oldRow = ActionRowBuilder.from(interaction.message.components[0]);
+          oldRow.components.forEach(c => c.setDisabled(true));
+          await interaction.update({ components: [oldRow] }).catch(e => console.error("update error:", e));
+        } else {
+          await interaction.deferUpdate().catch(() => {});
+        }
+
         const embed = new EmbedBuilder().setColor(0xFF4500).setDescription(`${target} golpea a ${sender}`).setImage(randomFrom(rejectGifs));
-        return interaction.followUp({ embeds: [embed] });
+        return interaction.followUp({ embeds: [embed] }).catch(e => console.error("followUp error:", e));
       }
+
       if (id.startsWith("punch_volver_")) {
         const parts = id.split("_");
         const targetId = parts[2];
         const senderId = parts[3];
-        if (interaction.user.id !== targetId) return interaction.reply({ content: "âŒ Solo el usuario golpeado puede usar este botÃ³n.", ephemeral: true });
-        if (wasResponded(interaction.message.id)) return interaction.reply({ content: "âŒ Este mensaje ya fue respondido.", ephemeral: true });
-        markResponded(interaction.message.id);
+
+        if (interaction.user.id !== targetId) {
+          return interaction.reply({ content: "Solo el usuario golpeado puede usar este boton.", ephemeral: true }).catch(() => {});
+        }
+        if (wasResponded(interaction.message?.id)) {
+          return interaction.reply({ content: "Este mensaje ya fue respondido.", ephemeral: true }).catch(() => {});
+        }
+        markResponded(interaction.message?.id);
+
         const sender = await client.users.fetch(senderId).catch(() => null);
         const target = interaction.user;
-        const oldRow = ActionRowBuilder.from(interaction.message.components[0]);
-        oldRow.components.forEach(c => c.setDisabled(true));
-        await interaction.update({ components: [oldRow] });
+
+        if (interaction.message?.components?.[0]) {
+          const oldRow = ActionRowBuilder.from(interaction.message.components[0]);
+          oldRow.components.forEach(c => c.setDisabled(true));
+          await interaction.update({ components: [oldRow] }).catch(e => console.error("update error:", e));
+        } else {
+          await interaction.deferUpdate().catch(() => {});
+        }
+
         const embed = new EmbedBuilder().setColor(0xFF4500).setDescription(`${target} golpea de vuelta a ${sender}`).setImage(randomFrom(rejectGifs));
-        return interaction.followUp({ embeds: [embed] });
+        return interaction.followUp({ embeds: [embed] }).catch(e => console.error("followUp error:", e));
       }
     }
   } catch (error) {
-    console.error("Error en interacciÃ³n:", error);
-    if (interaction.isRepliable()) {
+    console.error("Error en interactionCreate:", error);
+    try {
       if (interaction.deferred || interaction.replied) {
-        interaction.followUp({ content: "âš ï¸ OcurriÃ³ un error.", ephemeral: true }).catch(() => {});
+        await interaction.followUp({ content: "Ocurrio un error: " + (error.message || "desconocido"), ephemeral: true });
       } else {
-        interaction.reply({ content: "âš ï¸ OcurriÃ³ un error.", ephemeral: true }).catch(() => {});
+        await interaction.reply({ content: "Ocurrio un error: " + (error.message || "desconocido"), ephemeral: true });
       }
-    }
+    } catch (e) {}
   }
+});
+
+process.on("unhandledRejection", (reason) => {
+  console.error("Unhandled Rejection:", reason);
+});
+
+process.on("uncaughtException", (err) => {
+  console.error("Uncaught Exception:", err);
 });
 
 client.login(TOKEN);
